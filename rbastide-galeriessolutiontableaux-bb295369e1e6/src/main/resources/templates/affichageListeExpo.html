@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<!--/*
+	Le contrôleur transmet deux informations à cette vue :
+		- tableaux : la liste des tableaux à afficher
+		- message : un éventuel message d'erreur ou d'information
+*/-->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des Expositions</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" href="../static/css/style.css"/>
+</head>
+<body>
+<h1>Expositions</h1>
+<!--/* On appelle l'URL 'add' du contôleur */-->
+<a th:href="@{add}" href='affichageListeExpo.html'>Ajouter une exposition</a>
+<!--/* On affiche un éventuel message d'erreur */-->
+<h3 th:text="${message}">Message de succès ou d'erreur</h3>
+<table>
+    <tr><th>Intitulé</th><th>Date de Début</th><th>Durée</th><th>Organisateur</th><th>Action</th></tr>
+    <!--/* Pour chaque tableau dans la liste 'tableaux' transmise par le contrôleur */-->
+    <tr th:each="t: ${evenements}">
+        <td th:text="${g.intitulé}">Intitulé de l'exposition</td>
+        <td th:text="${g.debut}">Heure de début de l'exposition</td>
+        <td th:text="${g.durée}"> Durée de l'exposition></td>
+        <!--/* cf. Elvis operator https://attacomsian.com/blog/thymeleaf-check-if-variable-defined */-->
+        <td th:text="${g.evenements?.nom} ?: 'Organisateur à choisir dans la liste'">Nom de la Galérie organisatrice</td>
+        <!--/* On met un lien vers l'URL 'delete' en passant l'id du tableau en paramètre */-->
+        <!--/* cf. https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#link-urls */-->
+        <td><a th:href=@{add"${g.evenements?.nom}">Ajouter une exposition [[${e.id}]]</a></td>
+        <td><a th:href="@{delete(id=${g.id})}">Supprimer l'exposition ' n°  [[${e.id}]]</a></td>
+    </tr>
+</table>
+<hr/>
+<a th:href="@{/}" href="../static/index.html">Retour au menu</a>
+<hr/>
+</body>
+</html>

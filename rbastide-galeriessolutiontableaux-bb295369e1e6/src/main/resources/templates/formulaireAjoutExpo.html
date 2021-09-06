@@ -1,0 +1,52 @@
+<!DOC<!DOCTYPE HTML>
+<!--/*
+        Information transmise par le contrôleur :
+        - tableau : Le tableau à éditer
+        - artistes : la liste des artistes pour pouvoir choisir l'auteur du tableau
+*/-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Ajouter une Exposition</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" href="../static/css/style.css"/>
+</head>
+<body>
+<h1>Ajouter une Exposition</h1>
+<!--/* Au revient au contrôleur, avec la méthode POST */-->
+<!--/* th:object déinit quel est l'objet édité par ce formulaire */-->
+<form th:object="${exposition}" method="POST" th:action="@{save}">
+    <div class="column">
+        <label for="intitule">titre:</label>
+        <!--/* th:field définit quel champ de l'objet est édité par cette zone de saisie */-->
+        <input type="text" th:field="*{intitule}" placeholder="Intitulé de l'exposition"/>
+        <hr/>
+        <input type="submit" value="Enregistrer" /> <input type="reset" value="Réinitialiser" />
+    </div>
+    <div class="column">
+        <label for="debut">Date de début de l'exposition:</label>
+        <select th:field="*{debut}" >
+            <!--/* On choisit la clé étrangère parmi les galeries */-->
+            <option th:each="a: ${galeries}" th:value="${g.id}" th:text="${g.nom} "${g.adresse}">Nom de la galerie</option>
+        </select>
+
+        <form th:object="${galerie}" method="POST" th:action="@{save}">
+            <div class="column">
+                <label for="nom">Nom:</label>
+                <!--/* th:field définit quel champ de l'objet est édité par cette zone de saisie */-->
+                <input type="text" th:field="*{nom}" placeholder="Nom de la galerie"/>
+                <hr/>
+                <input type="submit" value="Enregistrer" /> <input type="reset" value="Réinitialiser" />
+            </div>
+            <div class="column">
+                <label for="adresse">Adresse:</label>
+                <input type="text" th:field="*{adresse}" placeholder="Adresse de la galerie"/>
+            </div>
+        </form>
+
+</form>
+<hr/>
+<a th:href="@{/}" href="../static/index.html">Retour au menu</a>
+<hr/>
+</body>
+</html>
