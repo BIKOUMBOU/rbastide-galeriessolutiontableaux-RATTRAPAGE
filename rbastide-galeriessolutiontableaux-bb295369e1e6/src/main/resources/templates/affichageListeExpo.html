@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" href="../static/css/style.css"/>
 </head>
 <body>
-<h1>Expositions</h1>
+<h1>Les expositions </h1>
 <!--/* On appelle l'URL 'add' du contôleur */-->
 <a th:href="@{add}" href='affichageListeExpo.html'>Ajouter une exposition</a>
 <!--/* On affiche un éventuel message d'erreur */-->
@@ -22,12 +22,12 @@
     <tr><th>Intitulé</th><th>Date de Début</th><th>Durée</th><th>Organisateur</th><th>Action</th></tr>
     <!--/* Pour chaque exposition dans la liste 'exposition' transmise par le contrôleur */-->
     <tr th:each="t: ${evenements}">
-        <td th:text="${g.intitulé}">Intitulé de l'exposition</td>
-        <td th:text="${g.debut}">Heure de début de l'exposition</td>
-        <td th:text="${g.durée}"> Durée de l'exposition></td>
+        <td th:text="${e.intitulé}">Intitulé de l'exposition</td>
+        <td th:text="${e.debut}">Heure de début de l'exposition</td>
+        <td th:text="${e.durée}"> Durée de l'exposition></td>
         <!--/* cf. Elvis operator https://attacomsian.com/blog/thymeleaf-check-if-variable-defined */-->
         <td th:text="${g.evenements?.nom} ?: 'Organisateur à choisir dans la liste'">Nom de la Galérie organisatrice</td>
-        <!--/* On met un lien vers l'URL 'delete' en passant l'id du tableau en paramètre */-->
+        <!--/* On met un lien vers l'URL 'delete' en passant l'id de lexposition en paramètre */-->
         <!--/* cf. https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#link-urls */-->
         <td><a th:href=@{add"${g.evenements?.nom}">Ajouter une exposition   [[${e.id}]]</a></td>
         <td><a th:href="@{delete(id=${g.id})}">Supprimer l'exposition ' n°  [[${e.id}]]</a></td>
