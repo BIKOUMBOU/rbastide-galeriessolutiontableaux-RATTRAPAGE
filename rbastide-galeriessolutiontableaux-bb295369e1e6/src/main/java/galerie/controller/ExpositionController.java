@@ -2,15 +2,17 @@ package galerie.controller;
 
 import java.util.List;
 
+import galerie.dao.ArtisteRepository;
+import galerie.dao.GalerieRepository;
+import galerie.dao.TableauRepository;
 import galerie.entity.Exposition;
+import galerie.dao.ExpositionRepository;
 import galerie.entity.Galerie;
 import galerie.entity.Tableau;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import galerie.dao.ExpositionRepository;
 import galerie.dto.CaPourExposition;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -21,10 +23,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping(path = "/exposition")
 public class ExpositionController {
 
-    private final ExpositionRepository dao;
+    private final ExpositionRepository expositionDAO;
+    private final GalerieRepository    galerieDAO;
 
-    public ExpositionController(ExpositionRepository dao) {
-        this.dao = dao;
+    public ExpositionController(ExpositionRepository expositionDAO, GalerieRepository galerieDAO) {
+        this.expositionDAO = expositionDAO;
+        this.galerieDAO    = galerieDAO ;
     }
 
 
@@ -32,7 +36,7 @@ public class ExpositionController {
     public @ResponseBody
     List<CaPourExposition> listeCA() {
         // This returns a JSON or XML with the categories
-        return dao.listeCA();
+        return expositionDAO.listeCA();
     }
 
 
